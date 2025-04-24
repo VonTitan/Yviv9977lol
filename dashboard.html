@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday!</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.imgur.com/ImujWEk.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      z-index: -1;
+    }
+
+    .content {
+      position: relative;
+      top: 30%;
+      animation: pop 1s ease-out;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    h1 {
+      font-size: 4em;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px yellow, 0 0 20px orange; }
+      to { text-shadow: 0 0 20px red, 0 0 30px gold; }
+    }
+
+    .music-btn {
+      margin-top: 20px;
+      font-size: 1.2em;
+      padding: 10px 20px;
+      background-color: gold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: black;
+      font-weight: bold;
+      box-shadow: 0 0 10px yellow;
+    }
+
+    .music-btn:hover {
+      background-color: orange;
+    }
+
+    /* Text kecil yang harus di-zoom */
+    .small-text {
+      font-size: 0.5em;
+      color: lightgray;
+      margin-top: 20px;
+      letter-spacing: 1px;
+      transform: scale(0.5);
+      opacity: 0.5;
+      transition: transform 1s, opacity 1s;
+    }
+
+    .small-text:hover {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9em;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    footer a {
+      color: #00acee;
+      text-decoration: underline;
+    }
+
+    /* Notifikasi */
+    .notification {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 1.5em;
+      font-weight: bold;
+      box-shadow: 0 0 15px yellow;
+      z-index: 10;
+      animation: showNotification 2s ease-in-out forwards;
+    }
+
+    @keyframes showNotification {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+
+  <div class="content">
+    <h1>Happy Birthday!</h1>
+    <p>If this anomaly comes to your house, can you calm down? </p>
+    <button class="music-btn" onclick="playMusic()">Play sound</button>
+    <!-- Teks kecil yang harus di-zoom -->
+    <p class="small-text">I'm still trying to code :)</p>
+  </div>
+
+  <!-- Backsound -->
+  <audio id="bgm" loop>
+    <source src="https://files.catbox.moe/8lr60x.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+  <script>
+    const jsConfetti = new JSConfetti();
+    setInterval(() => {
+      jsConfetti.addConfetti();
+    }, 2000);
+
+    let timerStarted = false;
+
+    function playMusic() {
+      const audio = document.getElementById('bgm');
+      audio.play();
+
+      if (!timerStarted) {
+        timerStarted = true;
+
+        // Timer untuk notifikasi "Don't forget me"
+        setTimeout(() => {
+          const notification = document.createElement('div');
+          notification.classList.add('notification');
+          notification.innerHTML = "Don't forget me!";
+          document.body.appendChild(notification);
+
+          // Tampilkan notifikasi setelah 25 detik
+          setTimeout(() => {
+            notification.style.display = 'block';
+          }, 25000);
+
+          // Menutup website setelah 30 detik
+          setTimeout(() => {
+            window.location.href = 'https://www.google.com';
+          }, 30000);
+        }, 0); // Timer dimulai langsung setelah tombol play diklik
+      }
+    }
+  </script>
+
+  <!-- Credit -->
+  <footer>
+    Music credit: <a href="https://youtu.be/kPnsJlR2Xto?si=8Ai_O1Y-wtedF2za" target="_blank">Tung Tung Tung Sahur - YouTube</a>
+  </footer>
+</body>
+</html>
